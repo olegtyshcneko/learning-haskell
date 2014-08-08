@@ -34,3 +34,38 @@ chain n
 numLongChains :: Int
 numLongChains = length (filter isLong (map chain [1..100]))
               where isLong xs = length xs > 15
+              
+numLongChainsLambda = length (filter (\xs -> length xs > 15) (map chain [1..100]))
+
+flipLambda :: (a -> b -> c) -> b -> a ->c
+flipLambda f = \x y -> f y x
+
+sumWithFold :: (Num a) => [a] -> a
+sumWithFold xs = foldl (\acc x -> acc + x) 0 xs
+
+sum' :: (Num a) => [a] -> a
+sum' = foldl (+) 0
+
+elemWithFold :: (Eq a) => a -> [a] -> Bool
+elemWithFold y = foldl (\acc x -> if x==y then True else acc) False
+
+mapWithFold :: (a -> b) -> [a] -> [b]
+mapWithFold f xs = foldr (\x acc -> f x : acc) [] xs
+
+maximumWithFold :: (Ord a) => [a] -> a
+maximumWithFold = foldr1 (\x acc -> if x > acc then x else acc)
+
+reverseWithFold :: [a] -> [a]
+reverseWithFold = foldl (flip (:)) []
+
+productWithFold :: (Num a) => [a] -> a
+productWithFold = foldr1 (*)
+
+filterWithFold :: (a -> Bool) -> [a] -> [a]
+filterWithFold p = foldr (\x acc -> if p x then x : acc else acc) []
+
+headWithFold :: [a] -> a
+headWithFold = foldr1 (\x _ -> x)
+
+lastWithFold :: [a] -> a
+lastWithFold = foldl1 (\_ x -> x)
